@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>国の一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00796b;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            border: 1px solid #b2ebf2;
+        }
+        .country-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .delete-button {
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-end;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>国の一覧</h1>
+        <a href="/admin/addCountry" style="display: inline-block; margin-bottom: 20px; color: #00796b;">国の新規登録</a>
+        <ul>
+            <li th:each="country : ${country}">
+                <div class="country-details">
+                    <strong th:text="${country.name}">国名</strong>
+                    <span th:text="'面積: ' + ${country.area} + ' km²'">面積</span>
+                    <span th:text="'人口: ' + ${country.population} + ' 人'">人口</span>
+                    <span th:text="'国旗: ' + ${country.nationalFlag}">国旗</span>
+                    <span th:text="'時差: ' + ${country.localTime} + ' 時間'">現地時間</span>
+                    <span th:text="'豆知識: ' + ${country.trivia}">豆知識</span>
+                    <span th:text="'概要: ' + ${country.overview}">概要</span>
+                    <span th:text="'特産物: ' + ${country.goods}">特産物</span>
+                    <span th:text="'地図リンク: ' + ${country.map}">地図リンク</span>
+                    
+                    <form th:action="@{/remove}" method="post">
+                        <input type="hidden" name="id" th:value="${country.id}" />
+                        <button type="submit" class="delete-button">削除</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

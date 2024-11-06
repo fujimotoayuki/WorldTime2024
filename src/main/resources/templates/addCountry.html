@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国情報登録フォーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>国情報登録フォーム</h1>
+    <form action="/addCountry" method="POST"> 
+        
+
+        <label for="name">国名:</label>
+        <input type="text" id="name" name="name" maxlength="50" required>
+
+        <label for="area">面積:</label>
+        <input type="number" id="area" name="area" required>
+
+        <label for="population">人口:</label>
+        <input type="number" id="population" name="population" required>
+
+        <label for="nationalFlag">国旗:</label>
+        <input type="text" id="nationalFlag" name="nationalFlag" maxlength="50" required>
+
+        <label for="localTime">時差:</label>
+        <input type="number" id="localTime" name="localTime" required>
+
+        <label for="trivia">豆知識:</label>
+        <input type="text" id="trivia" name="trivia" maxlength="500">
+
+        <label for="overview">概要:</label>
+        <input type="text" id="overview" name="overview" maxlength="500">
+
+        <label for="goods">特産物:</label>
+        <input type="text" id="goods" name="goods" maxlength="500">
+
+        <label for="maps">マップリンク:</label>
+        <input type="text" id="map" name="map" maxlength="500">
+
+        <button type="submit">登録する</button>
+    </form>
+</body>
+</html>

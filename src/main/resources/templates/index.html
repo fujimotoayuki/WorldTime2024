@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${country.name} + 'の情報'"></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .top-section {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .top-section img {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+        }
+        .info-box {
+            display: flex;
+            flex-direction: row;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .info-box div {
+            margin-right: 20px;
+        }
+        .middle-section {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .middle-section iframe {
+            width: 400px;
+            height: 300px;
+            margin-right: 20px;
+        }
+        .local-country {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .bottom-section {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+        }
+        .bottom-section h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        .bottom-section div {
+            max-width: 30%;
+        }
+        .hideen{
+			display:none;
+		}
+        .fulluscreen footer{
+            display : none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-section">
+        <img th:src="@{'/img/'+${country.nationalFlag}}" alt="国旗">
+        <div class="info-box">
+            <div><strong>国名:</strong> <span th:text="${country.name}"></span></div>
+            <div><strong>面積:</strong> <span th:text="${country.area}"></span> km²</div>
+            <div><strong>人口:</strong> <span th:text="${country.population}"></span> 人</div>
+            <div><strong>日本時間:</strong> <span id="japan">--:--:--</span></div>
+        </div>
+    </div>
+    <div class="middle-section">
+        <iframe th:src="'https://www.google.com/maps?q=' + ${country.name} + '&output=embed'"width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <div class="local-country">
+            <strong>現地時間:</strong> <span id="local" th:text="${country.localTime}">--:--:--</span>
+        </div>
+    </div>
+    <div class="bottom-section">
+        <div>
+            <h3>豆知識</h3>
+            <p th:text="${country.trivia}"></p>
+        </div>
+        <div>
+            <h3>概要説明</h3>
+            <p th:text="${country.overview}"></p>
+        </div>
+        <div>
+            <h3>特産品</h3>
+            <p th:text="${country.goods}"></p>
+            <div id="countryInfo" class="hideen" th:text="${country.localTime}"></div>
+        </div>
+        <script>
+    
+            updateJapanTime();//日本時間を表示
+            updateLocalTime();//それぞれの時間を表示
+        
+            function updateJapanTime() {//日本時間
+                const now = new Date();
+                document.getElementById('japan').textContent = now.toLocaleTimeString('ja-JP', { timeZone: 'Asia/Tokyo' });
+            }
+        
+        function updateLocalTime() {//それぞれの時間
+            const now = new Date();
+            const worldClock = document.getElementById("countryInfo").innerHTML;
+            
+            if (worldClock) {
+                const b = now.getTime();
+                const c=  worldClock * 60 * 60 * 1000;
+                const time = new Date(now.getTime() + worldClock * 60 * 60 * 1000);
+                const localTime = time.toLocaleTimeString('en-GB', { timeZone: 'Europe/London' });
+                document.getElementById("local").innerHTML = localTime;
+            } else {
+                console.error("worldClock is null or undefined");
+            }
+        }
+        
+        
+            
+            window.onload = function() {//時間の更新
+                setInterval(updateJapanTime, 1000);  
+                setInterval(updateLocalTime, 1000);
+
+                setTimeout(function() {
+                 window.location.href = "http://localhost:8080/";
+                    }, 5000); // 5000ミリ秒 = 5秒
+    
+            }
+        </script>
+    
+
+</body>
+</html>
