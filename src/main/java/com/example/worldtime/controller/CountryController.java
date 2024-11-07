@@ -51,27 +51,37 @@ public class CountryController {
         return "admin";
     }
 
-    // 管理者 国情報の追加ページ表示 addCounry.html
+    // 管理者 国情報の追加、更新ページ表示 addCounry.html
     @GetMapping("/admin/addCountry")
-    public String viewaddcountry() {
+    public String viewaddcountry(Model model,HttpSession session) {
+        Object sessionId = session.getAttribute("id");
+        System.out.print(sessionId);
+        if(sessionId != null){
+            Long sessionIdLong = (Long) sessionId;
+            Country country =countryService.getCountry(sessionIdLong);
+            model.addAttribute("country",country);
+            
+        }
         return "addCountry";
     }
 
-    // 管理者 国情報の追加
+    // 管理者 国情報の追加、更新。
     @PostMapping("/addCountry")
-    public void addCountry(@ModelAttribute Country country, HttpSession session) {
+    public String addCountry(@ModelAttribute Country country, HttpSession session) {
         Object sessionId = session.getAttribute("id");
         if (sessionId != null) {
             country.setId((Long) sessionId);
         }
         countryService.addCountry(country);
+        session.removeAttribute("id");
+        return "admin";
     }
 
-    // 編集画面へ遷移 国追加と同じ画面に遷移して、そこで文字を入力すると更新される。※使い勝手が悪い
+    // 編集画面へ遷移 国追加と同じ画面に遷移。
     @PostMapping("/editing")
     public String editingCountry(@RequestParam("id") long id, HttpSession session) {
         session.setAttribute("id", id);
-        return "addcountry";
+        return "redirect:/admin/addCountry";
     }
 
 }

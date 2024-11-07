@@ -2,6 +2,7 @@ package com.example.worldtime.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,9 @@ public class CountryService {
         crudCountryRepository.save(country); 
     }
 
+    public Country getCountry(Long id){//idに対して国を探す　crud
+        Optional<Country> optionalCountry = crudCountryRepository.findById(id);
+        return  optionalCountry.orElse(null);
+    }
 
 }

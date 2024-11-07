@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>国情報登録フォーム</title>
+    <title>国情報登録・変更フォーム</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,38 +41,41 @@
     </style>
 </head>
 <body>
-    <h1>国情報登録フォーム</h1>
+    <h1>国情報登録・変更フォーム</h1>
     <form action="/addCountry" method="POST"> 
         
 
         <label for="name">国名:</label>
-        <input type="text" id="name" name="name" maxlength="50" required>
+        <input type="text" id="name" name="name" maxlength="50" required th:value="${country != null ? country.name : ''}">
 
         <label for="area">面積:</label>
-        <input type="number" id="area" name="area" required>
+        <input type="number" id="area" name="area" required th:value="${country != null ? country.area : ''}">
 
         <label for="population">人口:</label>
-        <input type="number" id="population" name="population" required>
+        <input type="number" id="population" name="population" required th:value="${country != null ? country.population : ''}">
 
         <label for="nationalFlag">国旗:</label>
-        <input type="text" id="nationalFlag" name="nationalFlag" maxlength="50" required>
+        <input type="text" id="nationalFlag" name="nationalFlag" maxlength="50" required th:value="${country != null ? country.nationalFlag : ''}">
 
         <label for="localTime">時差:</label>
-        <input type="number" id="localTime" name="localTime" required>
+        <input type="number" id="localTime" name="localTime" required th:value="${country != null ? country.localTime : ''}">
 
         <label for="trivia">豆知識:</label>
-        <input type="text" id="trivia" name="trivia" maxlength="500">
+        <input type="text" id="trivia" name="trivia" maxlength="500" th:value="${country != null ? country.trivia : ''}">
 
         <label for="overview">概要:</label>
-        <input type="text" id="overview" name="overview" maxlength="500">
+        <input type="text" id="overview" name="overview" maxlength="500" th:value="${country != null ? country.overview : ''}">
 
         <label for="goods">特産物:</label>
-        <input type="text" id="goods" name="goods" maxlength="500">
+        <input type="text" id="goods" name="goods" maxlength="500" th:value="${country != null ? country.goods : ''}">
 
         <label for="maps">マップリンク:</label>
-        <input type="text" id="map" name="map" maxlength="500">
+        <input type="text" id="map" name="map" maxlength="500" th:value="${country != null ? country.map : ''}">
 
-        <button type="submit">登録する</button>
+        <button type="submit">登録・変更する</button>
     </form>
+    <div class="button-container">
+        <a href="/admin/countrylist" class="admin-button">国情報一覧</a>
+    </div>
 </body>
 </html>
