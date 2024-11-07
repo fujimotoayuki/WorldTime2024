@@ -73,6 +73,10 @@
                         <input type="hidden" name="id" th:value="${country.id}" />
                         <button type="submit" class="delete-button">削除</button>
                     </form>
+                    <form th:action="@{/editing}" method="post">
+                        <input type="hidden" name="id" th:value="${country.id}" />
+                        <button type="submit" class="delete-button">編集</button>
+                    </form>
                 </div>
             </li>
         </ul>
